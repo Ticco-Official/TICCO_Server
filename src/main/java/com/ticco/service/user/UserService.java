@@ -1,5 +1,6 @@
 package com.ticco.service.user;
 
+import com.ticco.domain.user.Onboarding;
 import com.ticco.domain.user.User;
 import com.ticco.domain.user.repository.UserRepository;
 import com.ticco.service.user.dto.request.CreateUserDto;
@@ -17,7 +18,7 @@ public class UserService {
     @Transactional
     public Long registerUser(CreateUserDto request) {
         UserServiceUtils.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
-        User user = userRepository.save(User.newInstance(request.getSocialId(), request.getSocialType()));
+        User user = userRepository.save(User.newInstance(request.getSocialId(), request.getSocialType(), Onboarding.newInstance()));
         return user.getId();
     }
 }

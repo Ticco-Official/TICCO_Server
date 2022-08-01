@@ -39,11 +39,15 @@ public class Onboarding extends AuditingTimeEntity {
         this.isChecked = isChecked;
     }
 
-    public static Onboarding newInstance(String nickname, String profileImageUrl) {
+    public static Onboarding newInstance() {
         return Onboarding.builder()
-                .nickname(nickname)
-                .profileImageUrl(profileImageUrl)
                 .isChecked(false)
                 .build();
+    }
+
+    public void updateInfo(String nickname, String profileImageUrl) {
+        this.nickname = nickname;
+        this.profileImageUrl = profileImageUrl;
+        this.isChecked = true;
     }
 }

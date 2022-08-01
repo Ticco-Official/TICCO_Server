@@ -27,12 +27,13 @@ public class User extends AuditingTimeEntity {
     @JoinColumn(name = "onboarding_id", nullable = false)
     private Onboarding onboarding;
 
-    private User(String socialId, UserSocialType socialType) {
+    private User(String socialId, UserSocialType socialType, Onboarding onboarding) {
         this.socialInfo = SocialInfo.of(socialId, socialType);
+        this.onboarding = onboarding;
         this.status = UserStatus.ACTIVE;
     }
 
-    public static User newInstance(String socialId, UserSocialType socialType) {
-        return new User(socialId, socialType);
+    public static User newInstance(String socialId, UserSocialType socialType, Onboarding onboarding) {
+        return new User(socialId, socialType, onboarding);
     }
 }
