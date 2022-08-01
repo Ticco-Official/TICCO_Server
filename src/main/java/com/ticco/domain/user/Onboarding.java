@@ -1,12 +1,15 @@
 package com.ticco.domain.user;
 
 import com.ticco.domain.common.AuditingTimeEntity;
+import com.ticco.domain.ticket.Ticket;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -25,6 +28,9 @@ public class Onboarding extends AuditingTimeEntity {
 
     @Column(nullable = false)
     private boolean isChecked;
+
+    @OneToMany(mappedBy = "onboarding", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Ticket> tickets = new ArrayList<>();
 
     @Builder(access = AccessLevel.PACKAGE)
     public Onboarding(String nickname, String profileImageUrl, boolean isChecked) {
