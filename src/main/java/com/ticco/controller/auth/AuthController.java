@@ -1,8 +1,8 @@
 package com.ticco.controller.auth;
 
 import com.ticco.common.dto.ApiResponse;
+import com.ticco.common.success.SuccessCode;
 import com.ticco.controller.auth.dto.request.LoginRequestDto;
-import com.ticco.controller.auth.dto.request.SignUpRequestDto;
 import com.ticco.controller.auth.dto.response.LoginResponse;
 import com.ticco.service.auth.AuthService;
 import com.ticco.service.auth.AuthServiceProvider;
@@ -24,16 +24,6 @@ public class AuthController {
     private final AuthServiceProvider authServiceProvider;
     private final CreateTokenService createTokenService;
 
-    @ApiOperation("회원가입 페이지 - 회원가입을 요청합니다")
-    @PostMapping("/v1/auth/signup")
-    public ApiResponse<LoginResponse> signUp(@Valid @RequestBody SignUpRequestDto request) {
-        AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
-        Long userId = authService.signUp(request.toServiceDto());
-
-        TokenResponseDto tokenInfo = createTokenService.createTokenInfo(userId);
-        return ApiResponse.success(LoginResponse.of(userId, tokenInfo));
-    }
-
     @ApiOperation("로그인 페이지 - 로그인을 요청합니다")
     @PostMapping("/v1/auth/login")
     public ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequestDto request) {
@@ -41,12 +31,12 @@ public class AuthController {
         Long userId = authService.login(request.toServiceDto());
 
         TokenResponseDto tokenInfo = createTokenService.createTokenInfo(userId);
-        return ApiResponse.success(LoginResponse.of(userId, tokenInfo));
+        return ApiResponse.success(SuccessCode.LOGIN_SUCCESS, LoginResponse.of(userId, tokenInfo));
     }
 
     @ApiOperation("JWT 인증 - Access Token을 갱신합니다.")
     @PostMapping("/v1/auth/refresh")
     public ApiResponse<TokenResponseDto> reissue(@Valid @RequestBody TokenRequestDto request) {
-        return ApiResponse.success(createTokenService.reissueToken(request));
+        return ApiResponse.success(SuccessCode.REISSUE_TOKEN_SUCCESS, createTokenService.reissueToken(request));
     }
 }
