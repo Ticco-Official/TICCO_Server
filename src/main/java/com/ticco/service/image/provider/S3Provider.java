@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Component
-public class UploadProvider {
+public class S3Provider {
 
     private final S3FileStorageClient fileStorageClient;
 
@@ -17,5 +17,12 @@ public class UploadProvider {
         String fileName = request.getFileNameWithBucketDirectory(file.getOriginalFilename());
         fileStorageClient.uploadFile(file, fileName);
         return fileStorageClient.getFileUrl(fileName);
+    }
+
+    public void deleteFile(String fileName) {
+        if (fileName != null) {
+            String[] image = fileName.split(".com/");
+            fileStorageClient.deleteFile(image[1]);
+        }
     }
 }
