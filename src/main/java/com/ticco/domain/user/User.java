@@ -23,6 +23,10 @@ public class User extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "onboarding_id", nullable = false)
+    private Onboarding onboarding;
+
     private User(String socialId, UserSocialType socialType) {
         this.socialInfo = SocialInfo.of(socialId, socialType);
         this.status = UserStatus.ACTIVE;
