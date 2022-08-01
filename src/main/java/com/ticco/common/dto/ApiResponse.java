@@ -1,7 +1,7 @@
 package com.ticco.common.dto;
 
 import com.ticco.common.exception.ErrorCode;
-import com.ticco.common.exception.ErrorStatusCode;
+import com.ticco.common.success.SuccessCode;
 import lombok.*;
 
 @ToString
@@ -10,21 +10,22 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiResponse<T> {
 
-    public static final ApiResponse<String> SUCCESS = success("OK");
+    public static final ApiResponse<String> SUCCESS = success(SuccessCode.SUCCESS, null);
 
-    private ErrorStatusCode resultCode;
+    private int status;
+    private boolean success;
     private String message;
     private T data;
 
-    public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(null, "", data);
+    public static <T> ApiResponse<T> success(SuccessCode successCode, T data) {
+        return new ApiResponse<>(successCode.getStatus(), true, successCode.getMessage(), data);
     }
 
     public static <T> ApiResponse<T> error(ErrorCode errorCode) {
-        return new ApiResponse<>(errorCode.getStatusCode(), errorCode.getMessage(), null);
+        return new ApiResponse<>(errorCode.getStatus(), false, errorCode.getMessage(), null);
     }
 
     public static <T> ApiResponse<T> error(ErrorCode errorCode, String message) {
-        return new ApiResponse<>(errorCode.getStatusCode(), message, null);
+        return new ApiResponse<>(errorCode.getStatus(), false, message, null);
     }
 }
