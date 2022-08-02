@@ -1,7 +1,14 @@
 package com.ticco.config.swagger;
 
+import com.fasterxml.classmate.TypeResolver;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -9,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
@@ -26,7 +34,10 @@ import java.util.Set;
 @Configuration
 @EnableSwagger2
 @EnableWebMvc
+@RequiredArgsConstructor
 public class SwaggerConfig implements WebMvcConfigurer {
+
+    private final TypeResolver typeResolver;
 
     //swagger 2.9.2 버전 리소스 등록
     @Override
@@ -45,6 +56,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .consumes(getConsumeContentTypes())
                 .produces(getProduceContentTypes())
                 .useDefaultResponseMessages(false)
+                .alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve(Page.class)))
                 .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
@@ -88,5 +100,19 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .description("TICCO 공식 API 명세서입니다.")
                 .version("1.0.0")
                 .build();
+    }
+
+    @Getter
+    @Setter
+    @ApiModel
+    static class Page {
+        @ApiModelProperty(value = "페이지 번호(0..N)")
+        private Integer page;
+
+        @ApiModelProperty(value = "페이지 크기", allowableValues = "range[0, 100]")
+        private Integer size;
+
+        @ApiModelProperty(value = "정렬(사용법: 컬럼명,ASC|DESC)")
+        private List<String> sort;
     }
 }
