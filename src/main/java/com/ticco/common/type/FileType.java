@@ -10,7 +10,8 @@ import static com.ticco.common.exception.ErrorCode.FORBIDDEN_FILE_NAME_EXCEPTION
 @Getter
 public enum FileType {
 
-    USER_PROFILE_IMAGE("(유저) 프로필 이미지", "user/profile/v1/", FileContentType.IMAGE);
+    USER_PROFILE_IMAGE("(유저) 프로필 이미지", "user/profile/v1/", FileContentType.IMAGE),
+    TICKET_IMAGE("티켓 이미지", "ticket/v1/", FileContentType.IMAGE);
 
     private final String description;
     private final String directory;
