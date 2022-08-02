@@ -28,6 +28,6 @@ public class TicketService {
     @Transactional
     public void createTicket(CreateTicketRequestDto request, MultipartFile image, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        ticketRepository.save(Ticket.newInstance(user.getOnboarding(), request.getDate(), request.getCategory(), request.getTitle(), request.getContent(), s3Provider.uploadFile(ImageUploadFileRequest.of(FileType.TICKET_IMAGE), image), request.getTheme()));
+        ticketRepository.save(Ticket.newInstance(user.getOnboarding(), request.getDate(), request.getCategory(), request.getTitle(), request.getRating(), request.getContent(), s3Provider.uploadFile(ImageUploadFileRequest.of(FileType.TICKET_IMAGE), image), request.getTheme()));
     }
 }

@@ -60,12 +60,13 @@ public class Ticket extends AuditingTimeEntity {
         this.theme = theme;
     }
 
-    public static Ticket newInstance(Onboarding onboarding, LocalDate date, TicketCategory category, String title, String content, String ticketImageUrl, TicketTheme theme) {
+    public static Ticket newInstance(Onboarding onboarding, LocalDate date, TicketCategory category, String title, double rating, String content, String ticketImageUrl, TicketTheme theme) {
         return Ticket.builder()
                 .onboarding(onboarding)
                 .date(date)
                 .category(category)
                 .title(title)
+                .rating(rating)
                 .content(content)
                 .ticketImageUrl(ticketImageUrl)
                 .theme(theme)
