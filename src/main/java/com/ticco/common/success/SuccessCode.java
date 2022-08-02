@@ -14,7 +14,8 @@ public enum SuccessCode {
     SUCCESS(OK, "성공입니다."),
     LOGIN_SUCCESS(OK, "로그인 성공입니다."),
     REISSUE_TOKEN_SUCCESS(OK, "토큰 갱신 성공입니다."),
-    CHECK_ONBOARDING_SUCCESS(OK, "온보딩 등록여부 조회 성공입니다.")
+    CHECK_ONBOARDING_SUCCESS(OK, "온보딩 등록여부 조회 성공입니다."),
+    READ_ONBOARDING_SUCCESS(OK, "온보딩 정보 조회 성공입니다.")
 
     // 201 CREATED
 

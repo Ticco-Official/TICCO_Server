@@ -6,6 +6,7 @@ import com.ticco.config.interceptor.Auth;
 import com.ticco.config.resolver.UserId;
 import com.ticco.service.user.UserRetrieveService;
 import com.ticco.service.user.dto.response.CheckOnboardingInfoResponse;
+import com.ticco.service.user.dto.response.OnboardingInfoResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,12 @@ public class UserRetrieveController {
     @GetMapping("/v1/user/onboarding/check")
     public ApiResponse<CheckOnboardingInfoResponse> checkMyOnboardingInfo(@ApiIgnore @UserId Long userId) {
         return ApiResponse.success(SuccessCode.CHECK_ONBOARDING_SUCCESS, userRetrieveService.checkMyOnboardingInfo(userId));
+    }
+
+    @ApiOperation("[인증] 나의 온보딩 정보를 확인합니다.")
+    @Auth
+    @GetMapping("/v1/user/onboarding")
+    public ApiResponse<OnboardingInfoResponse> getMyOnboardingInfo(@ApiIgnore @UserId Long userId) {
+        return ApiResponse.success(SuccessCode.READ_ONBOARDING_SUCCESS, userRetrieveService.getMyOnboardingInfo(userId));
     }
 }
