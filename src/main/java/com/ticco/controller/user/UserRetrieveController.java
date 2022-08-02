@@ -22,7 +22,7 @@ public class UserRetrieveController {
 
     @ApiOperation("[인증] 나의 온보딩 정보 등록여부를 확인합니다.")
     @Auth
-    @GetMapping("/v1/user/me/onboarding/check")
+    @GetMapping("/v1/user/onboarding/check")
     public ApiResponse<CheckOnboardingInfoResponse> checkMyOnboardingInfo(@ApiIgnore @UserId Long userId) {
         return ApiResponse.success(SuccessCode.CHECK_ONBOARDING_SUCCESS, userRetrieveService.checkMyOnboardingInfo(userId));
     }
