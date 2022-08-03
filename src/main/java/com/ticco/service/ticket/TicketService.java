@@ -8,7 +8,7 @@ import com.ticco.domain.user.repository.OnboardingRepository;
 import com.ticco.domain.user.repository.UserRepository;
 import com.ticco.service.image.provider.S3Provider;
 import com.ticco.service.image.provider.dto.request.ImageUploadFileRequest;
-import com.ticco.service.ticket.dto.request.CreateTicketRequestDto;
+import com.ticco.service.ticket.dto.request.UpdateTicketRequestDto;
 import com.ticco.service.user.UserServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class TicketService {
     private final S3Provider s3Provider;
 
     @Transactional
-    public void createTicket(CreateTicketRequestDto request, MultipartFile image, Long userId) {
+    public void createTicket(UpdateTicketRequestDto request, MultipartFile image, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         ticketRepository.save(Ticket.newInstance(user.getOnboarding(), request.getDate(), request.getCategory(), request.getTitle(), request.getRating(), request.getContent(), s3Provider.uploadFile(ImageUploadFileRequest.of(FileType.TICKET_IMAGE), image), request.getTheme()));
     }

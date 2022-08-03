@@ -4,7 +4,7 @@ import com.ticco.common.dto.ApiResponse;
 import com.ticco.config.interceptor.Auth;
 import com.ticco.config.resolver.UserId;
 import com.ticco.service.ticket.TicketService;
-import com.ticco.service.ticket.dto.request.CreateTicketRequestDto;
+import com.ticco.service.ticket.dto.request.UpdateTicketRequestDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +27,7 @@ public class TicketController {
     @ApiOperation("[인증] 새로운 티켓을 생성합니다.")
     @Auth
     @PostMapping("/v1/ticket")
-    public ApiResponse<String> createTicket(@Valid CreateTicketRequestDto request,
+    public ApiResponse<String> createTicket(@Valid UpdateTicketRequestDto request,
                                             @ApiParam(name = "image", value = "티켓의 이미지", required = true)
                                             @RequestPart(required = false) MultipartFile image,
                                             @ApiIgnore @UserId Long userId) {

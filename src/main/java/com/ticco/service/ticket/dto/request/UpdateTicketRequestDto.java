@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreateTicketRequestDto {
+public class UpdateTicketRequestDto {
 
     @ApiModelProperty(value = "티켓의 날짜 (yyyy-MM-dd)", example = "2022-01-01", required = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
