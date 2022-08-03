@@ -12,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -19,13 +20,13 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 
 @Api(tags = "Ticket")
+@Validated
 @RequiredArgsConstructor
 @RestController
 public class TicketRetrieveController {
 
     private final TicketRetrieveService ticketRetrieveService;
 
-    //TODO AllowedSortProperties 작동 안하는 문제 해결
     @ApiOperation("[인증] 특정 조건에 해당하는 티켓 목록을 페이지네이션으로 조회합니다.")
     @Auth
     @GetMapping("/v1/ticket")

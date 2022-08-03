@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Objects;
 
 import static com.ticco.common.exception.ErrorCode.*;
@@ -38,6 +39,17 @@ public class ControllerExceptionAdvice {
         log.error(e.getMessage());
         FieldError fieldError = Objects.requireNonNull(e.getFieldError());
         return ApiResponse.error(VALIDATION_EXCEPTION, String.format("%s (%s)", fieldError.getDefaultMessage(), fieldError.getField()));
+    }
+
+    /**
+     * 400 BadRequest
+     * Pageable에 허용하지 않는 정렬기준이 입력된 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ApiResponse<Object> handleConstraintViolationException(final ConstraintViolationException e) {
+        log.error(e.getMessage());
+        return ApiResponse.error(VALIDATION_SORT_TYPE_EXCEPTION);
     }
 
     /**
