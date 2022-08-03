@@ -3,6 +3,7 @@ package com.ticco.domain.ticket;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ticco.domain.common.AuditingTimeEntity;
 import com.ticco.domain.user.Onboarding;
+import com.ticco.service.ticket.dto.request.UpdateTicketRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -71,5 +72,18 @@ public class Ticket extends AuditingTimeEntity {
                 .ticketImageUrl(ticketImageUrl)
                 .theme(theme)
                 .build();
+    }
+
+    public void updateInfo(UpdateTicketRequestDto request) {
+        this.date = request.getDate();
+        this.category = request.getCategory();
+        this.title = request.getTitle();
+        this.rating = request.getRating();
+        this.content = request.getContent();
+        this.theme = request.getTheme();
+    }
+
+    public void updateImage(String ticketImageUrl) {
+        this.ticketImageUrl = ticketImageUrl;
     }
 }

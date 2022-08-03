@@ -9,5 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface TicketRepositoryCustom {
 
+    Ticket findTicketById(Long id);
+
     Page<Ticket> findTicketByFilterConditionUsingPaging(Onboarding onboarding, @Nullable TicketCategory category, Pageable pageable);
 }

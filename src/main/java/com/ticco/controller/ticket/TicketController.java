@@ -9,9 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -32,6 +30,19 @@ public class TicketController {
                                             @RequestPart(required = false) MultipartFile image,
                                             @ApiIgnore @UserId Long userId) {
         ticketService.createTicket(request, image, userId);
+        return ApiResponse.SUCCESS;
+    }
+
+    @ApiOperation("[인증] 티켓을 수정합니다.")
+    @Auth
+    @PutMapping("/v1/ticket/{ticketId}")
+    public ApiResponse<String> updateTicket(@ApiParam(name = "ticketId", value = "티켓의 id", required = true)
+                                            @PathVariable Long ticketId,
+                                            @Valid UpdateTicketRequestDto request,
+                                            @ApiParam(name = "image", value = "티켓의 이미지")
+                                            @RequestPart(required = false) MultipartFile image,
+                                            @ApiIgnore @UserId Long userId) {
+        ticketService.updateTicket(ticketId, request, image, userId);
         return ApiResponse.SUCCESS;
     }
 }

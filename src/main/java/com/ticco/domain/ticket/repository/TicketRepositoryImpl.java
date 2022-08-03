@@ -27,6 +27,14 @@ public class TicketRepositoryImpl implements TicketRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
+    public Ticket findTicketById(Long id) {
+        return queryFactory
+                .selectFrom(ticket)
+                .where(ticket.id.eq(id))
+                .fetchOne();
+    }
+
+    @Override
     public Page<Ticket> findTicketByFilterConditionUsingPaging(Onboarding onboarding, @Nullable TicketCategory category, Pageable pageable) {
         List<OrderSpecifier> orders = getAllOrderSpecifiers(pageable);
         List<Ticket> tickets = queryFactory

@@ -25,12 +25,14 @@ public enum ErrorCode {
     FORBIDDEN_EXCEPTION(FORBIDDEN, "허용하지 않는 요청입니다."),
     FORBIDDEN_FILE_TYPE_EXCEPTION(BAD_REQUEST, "허용되지 않은 파일 형식입니다"),
     FORBIDDEN_FILE_NAME_EXCEPTION(BAD_REQUEST, "허용되지 않은 파일 이름입니다"),
+    FORBIDDEN_TICKET_EXCEPTION(FORBIDDEN, "티켓에 대한 권한이 없습니다."),
 
     // 404 Not Found
     NOT_FOUND_EXCEPTION(NOT_FOUND, "존재하지 않습니다"),
     NOT_FOUND_USER_EXCEPTION(NOT_FOUND, "탈퇴하거나 존재하지 않는 유저입니다"),
     NOT_FOUND_REFRESH_TOKEN_EXCEPTION(NOT_FOUND, "만료된 리프레시 토큰입니다."),
     NOT_FOUND_ONBOARDING_EXCEPTION(NOT_FOUND, "유저의 온보딩 정보가 존재하지 않습니다."),
+    NOT_FOUND_TICKET_EXCEPTION(NOT_FOUND, "존재하지 않는 티켓입니다."),
 
     // 405 Method Not Allowed
     METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, "지원하지 않는 메소드 입니다"),

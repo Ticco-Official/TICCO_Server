@@ -30,4 +30,21 @@ public class TicketService {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         ticketRepository.save(Ticket.newInstance(user.getOnboarding(), request.getDate(), request.getCategory(), request.getTitle(), request.getRating(), request.getContent(), s3Provider.uploadFile(ImageUploadFileRequest.of(FileType.TICKET_IMAGE), image), request.getTheme()));
     }
+
+    @Transactional
+    public void updateTicket(Long ticketId, UpdateTicketRequestDto request, MultipartFile image, Long userId) {
+        User user = UserServiceUtils.findUserById(userRepository, userId);
+        Ticket ticket = TicketServiceUtils.findTicketById(ticketRepository, ticketId);
+        TicketServiceUtils.checkForbiddenTicket(user.getOnboarding(), ticket);
+        String ticketImageUrl;
+        if (image == null) {
+            ticketImageUrl = ticket.getTicketImageUrl();
+        } else {
+            s3Provider.deleteFile(ticket.getTicketImageUrl());
+            ticketImageUrl = s3Provider.uploadFile(ImageUploadFileRequest.of(FileType.TICKET_IMAGE), image);
+        }
+        ticket.updateImage(ticketImageUrl);
+        ticket.updateInfo(request);
+        ticketRepository.save(ticket);
+    }
 }
