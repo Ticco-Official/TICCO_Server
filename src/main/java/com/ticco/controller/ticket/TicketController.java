@@ -45,4 +45,14 @@ public class TicketController {
         ticketService.updateTicket(ticketId, request, image, userId);
         return ApiResponse.SUCCESS;
     }
+
+    @ApiOperation("[인증] 티켓을 삭제합니다.")
+    @Auth
+    @DeleteMapping("/v1/ticket/{ticketId}")
+    public ApiResponse<String> deleteTicket(@ApiParam(name = "ticketId", value = "티켓의 id", required = true)
+                                            @PathVariable Long ticketId,
+                                            @ApiIgnore @UserId Long userId) {
+        ticketService.deleteTicket(ticketId, userId);
+        return ApiResponse.SUCCESS;
+    }
 }

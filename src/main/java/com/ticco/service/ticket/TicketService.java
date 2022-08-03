@@ -47,4 +47,12 @@ public class TicketService {
         ticket.updateInfo(request);
         ticketRepository.save(ticket);
     }
+
+    @Transactional
+    public void deleteTicket(Long ticketId, Long userId) {
+        User user = UserServiceUtils.findUserById(userRepository, userId);
+        Ticket ticket = TicketServiceUtils.findTicketById(ticketRepository, ticketId);
+        TicketServiceUtils.checkForbiddenTicket(user.getOnboarding(), ticket);
+        ticketRepository.delete(ticket);
+    }
 }
