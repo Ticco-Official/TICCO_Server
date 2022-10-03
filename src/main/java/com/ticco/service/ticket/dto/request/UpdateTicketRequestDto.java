@@ -39,6 +39,6 @@ public class UpdateTicketRequestDto {
     @Size(max = 200, message = "{ticket.content.size}")
     private String content;
 
-    @ApiModelProperty(value = "티켓의 테마 - 업데이트 예정", example = "NORMAL", required = true)
+    @ApiModelProperty(value = "티켓의 테마 - BLACK, GREEN, BLUE, WHITE", example = "BLACK", required = true)
     private TicketTheme theme;
 }

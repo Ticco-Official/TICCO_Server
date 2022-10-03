@@ -8,7 +8,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TicketTheme implements EnumModel {
-    NORMAL("기본");
+
+    BLACK("검정색"),
+    GREEN("초록색"),
+    BLUE("파랑색"),
+    WHITE("흰색");
+    
     private final String value;
 
     @Override
